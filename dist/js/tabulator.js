@@ -5792,7 +5792,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 		this.heightStyled = this.height ? this.height + "px" : "";
 
-		this.outerHeight = this.element.offsetHeight;
+		// TODO: HACK: This is a hack to prevent layout thrashing
+    this.outerHeight = this.table.options.hackRowOuterHeight || this.element.offsetHeight;
 	};
 
 	//set of cells
@@ -7105,8 +7106,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	};
 
 	Cell.prototype.getHeight = function () {
-
-		return this.height || this.element.offsetHeight;
+		// TODO: HACK: This is a hack to prevent layout thrashing
+    return this.height || this.table.options.hackCellOffsetHeight || this.element.offsetHeight;
 	};
 
 	Cell.prototype.show = function () {
@@ -7450,6 +7451,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	//default setup options
 
 	Tabulator.prototype.defaultOptions = {
+    // TODO: HACK: This is a hack to prevent layout thrashing
+    hackCellOffsetHeight: null,
+    hackRowOuterHeight: null,
 
 		height: false, //height of tabulator
 
