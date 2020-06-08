@@ -22676,21 +22676,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 			this.observer = new ResizeObserver(function (entry) {
 				if (!table.browserMobile || table.browserMobile && !table.modules.edit.currentCell) {
+          // TODO: HACK: Prevent the "ResizeObserver loop limit exceeded" error
+          requestAnimationFrame(() => {
+  					var nodeHeight = Math.floor(entry[0].contentRect.height);
+  					var nodeWidth = Math.floor(entry[0].contentRect.width);
 
-					var nodeHeight = Math.floor(entry[0].contentRect.height);
-					var nodeWidth = Math.floor(entry[0].contentRect.width);
+  					if (_this70.tableHeight != nodeHeight || _this70.tableWidth != nodeWidth) {
+  						_this70.tableHeight = nodeHeight;
+  						_this70.tableWidth = nodeWidth;
 
-					if (_this70.tableHeight != nodeHeight || _this70.tableWidth != nodeWidth) {
-						_this70.tableHeight = nodeHeight;
-						_this70.tableWidth = nodeWidth;
+  						if (table.element.parentNode) {
+  							_this70.containerHeight = table.element.parentNode.clientHeight;
+  							_this70.containerWidth = table.element.parentNode.clientWidth;
+  						}
 
-						if (table.element.parentNode) {
-							_this70.containerHeight = table.element.parentNode.clientHeight;
-							_this70.containerWidth = table.element.parentNode.clientWidth;
-						}
-
-						table.redraw();
-					}
+  						table.redraw();
+  					}
+          })
 				}
 			});
 
