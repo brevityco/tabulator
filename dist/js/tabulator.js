@@ -2141,6 +2141,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	//flat field set
 
 	Column.prototype._setFlatData = function (data, value) {
+    // TODO: HACK: Tabulator should NEVER mutate data
+    return
 
 		if (this.field) {
 
@@ -2151,7 +2153,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	//nested field set
 
 	Column.prototype._setNestedData = function (data, value) {
-
+    // TODO: HACK: Tabulator should NEVER mutate data
+    return
+    
 		var dataObj = data,
 		    structure = this.fieldStructure,
 		    length = structure.length;
